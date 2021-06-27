@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+       <title>Q-Learning</title>
+        <link href="qlearning.css" rel="stylesheet">
+    </head>
+    <body>
+        <header>
+            <div class="navbar navbar-dark bg-dark">
+                <div class="container">
+                     <h2 style="color:#fff">Q-Learning</h2>
+                </div>
+            </div>
+        </header>
+        <main style="margin-top: 40px">
+            <section class="container">
+                <table>
+                    <tr>
+                        <td>
+                            <div class="slidecontainer">
+                                <p>Velocidade:</p>
+                                <input type="range" min="0" max="10000" value="500"  id="velocidade">
+                                <div id="velocidadeText"></div>
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 30px">
+                                <p>Fator de Exploração:</p>
+                                <input type="text" name="epsilon" id="epsilon" value="0.7">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 30px">
+                                <p>Fator de Decaimento:</p>
+                                <input type="text" name="discountFactor" id="discountFactor" value="0.9">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 30px">
+                                <p>Taxa de Aprendizado:</p>
+                                <input type="text" name="learningRate" id="learningRate" value="0.9">
+                            </div>
+                        </td>
+                        <td>
+                            <div style="margin-left: 30px">
+                                <p>Número Épocas:</p>
+                                <input type="text" name="numeroEpocas" id="numeroEpocas" value="100">
+                            </div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <p>Ações:</p>
+                            <button id="iniciar">Iniciar</button>
+                            <button id="parar">Parar</button>
+                        </td>
+                    </tr>
+                </table>
+
+                <div class="row">
+                    <div class="col-6">
+                        <table style="margin:10px">
+                            <tr>
+                                <td id="f0-0"></td>
+                                <td id="f0-1"></td>
+                                <td id="f0-2"></td>
+                                <td id="f0-3"></td>
+                                <td id="f0-4"></td>
+                                <td id="f0-5"></td>
+                                <td id="f0-6"></td>
+                            </tr>
+                            <tr>
+                                <td id="f1-0"></td>
+                                <td id="f1-1"></td>
+                                <td id="f1-2"></td>
+                                <td id="f1-3"></td>
+                                <td id="f1-4"></td>
+                                <td id="f1-5"></td>
+                                <td id="f1-6"></td>
+                            </tr>
+                            <tr>
+                                <td id="f2-0"></td>
+                                <td id="f2-1"></td>
+                                <td id="f2-2"></td>
+                                <td id="f2-3"></td>
+                                <td id="f2-4"></td>
+                                <td id="f2-5"></td>
+                                <td id="f2-6"></td>
+                            </tr>
+                            <tr>
+                                <td id="f3-0"></td>
+                                <td id="f3-1"></td>
+                                <td id="f3-2"></td>
+                                <td id="f3-3"></td>
+                                <td id="f3-4"></td>
+                                <td id="f3-5"></td>
+                                <td id="f3-6"></td>
+                            </tr>
+                            <tr>
+                                <td id="f4-0"></td>
+                                <td id="f4-1"></td>
+                                <td id="f4-2"></td>
+                                <td id="f4-3"></td>
+                                <td id="f4-4"></td>
+                                <td id="f4-5"></td>
+                                <td id="f4-6"></td>
+                            </tr>
+                            <tr>
+                                <td id="f5-0"></td>
+                                <td id="f5-1"></td>
+                                <td id="f5-2"></td>
+                                <td id="f5-3"></td>
+                                <td id="f5-4"></td>
+                                <td id="f5-5"></td>
+                                <td id="f5-6"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-6">
+                        <div style="width: 400px; float: right">
+                            <canvas id="myChart" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-6">
+                    <p>qValues sem Objeto</p>
+                        <table style="margin:10px">
+                            <tr>
+                                <td id ="0-0"></td>
+                                <td id ="0-1"></td>
+                                <td id ="0-2"></td>
+                                <td id ="0-3"></td>
+                                <td id ="0-4"></td>
+                                <td id ="0-5"></td>
+                                <td id ="0-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="1-0"></td>
+                                <td id ="1-1"></td>
+                                <td id ="1-2"></td>
+                                <td id ="1-3"></td>
+                                <td id ="1-4"></td>
+                                <td id ="1-5"></td>
+                                <td id ="1-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="2-0"></td>
+                                <td id ="2-1"></td>
+                                <td id ="2-2"></td>
+                                <td id ="2-3"></td>
+                                <td id ="2-4"></td>
+                                <td id ="2-5"></td>
+                                <td id ="2-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="3-0"></td>
+                                <td id ="3-1"></td>
+                                <td id ="3-2"></td>
+                                <td id ="3-3"></td>
+                                <td id ="3-4"></td>
+                                <td id ="3-5"></td>
+                                <td id ="3-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="4-0"></td>
+                                <td id ="4-1"></td>
+                                <td id ="4-2"></td>
+                                <td id ="4-3"></td>
+                                <td id ="4-4"></td>
+                                <td id ="4-5"></td>
+                                <td id ="4-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="5-0"></td>
+                                <td id ="5-1"></td>
+                                <td id ="5-2"></td>
+                                <td id ="5-3"></td>
+                                <td id ="5-4"></td>
+                                <td id ="5-5"></td>
+                                <td id ="5-6"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class='col-6'>
+
+                        <p>qValues com Objeto</p>
+                        <table style="margin:10px">
+                            <tr>
+                                <td id ="k0-0"></td>
+                                <td id ="k0-1"></td>
+                                <td id ="k0-2"></td>
+                                <td id ="k0-3"></td>
+                                <td id ="k0-4"></td>
+                                <td id ="k0-5"></td>
+                                <td id ="k0-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="k1-0"></td>
+                                <td id ="k1-1"></td>
+                                <td id ="k1-2"></td>
+                                <td id ="k1-3"></td>
+                                <td id ="k1-4"></td>
+                                <td id ="k1-5"></td>
+                                <td id ="k1-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="k2-0"></td>
+                                <td id ="k2-1"></td>
+                                <td id ="k2-2"></td>
+                                <td id ="k2-3"></td>
+                                <td id ="k2-4"></td>
+                                <td id ="k2-5"></td>
+                                <td id ="k2-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="k3-0"></td>
+                                <td id ="k3-1"></td>
+                                <td id ="k3-2"></td>
+                                <td id ="k3-3"></td>
+                                <td id ="k3-4"></td>
+                                <td id ="k3-5"></td>
+                                <td id ="k3-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="k4-0"></td>
+                                <td id ="k4-1"></td>
+                                <td id ="k4-2"></td>
+                                <td id ="k4-3"></td>
+                                <td id ="k4-4"></td>
+                                <td id ="k4-5"></td>
+                                <td id ="k4-6"></td>
+                            </tr>
+                            <tr>
+                                <td id ="k5-0"></td>
+                                <td id ="k5-1"></td>
+                                <td id ="k5-2"></td>
+                                <td id ="k5-3"></td>
+                                <td id ="k5-4"></td>
+                                <td id ="k5-5"></td>
+                                <td id ="k5-6"></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div class="col-12">
+                        <code>
+                            <div id="log"></div>
+                            <div id="log2"></div>
+                        </code>
+                    </div>
+                    <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js"></script>
+                    <script src="qlearning.js"></script>
+
+                </div>
+
+
+            </section>
+        </main>
+    </body>
+</html>

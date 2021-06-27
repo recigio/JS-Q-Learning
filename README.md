@@ -267,3 +267,10 @@ https://towardsdatascience.com/implement-grid-world-with-q-learning-51151747b455
 Da esquerda para direita, de cima para baixo: Visão geral, gráfico de resultados, quadro de estado sem objeto e com objeto.
 
 ![Quadro](images/visao_geral.png)
+
+### Como executar
+
+Baixar os arquivos e executar o arquivo "index.html".
+
+Para dúvidas: recigio@gmail.com
+
